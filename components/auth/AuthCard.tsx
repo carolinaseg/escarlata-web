@@ -4,7 +4,6 @@ import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
-import { EmptyState } from "@/components/ui/EmptyState";
 
 type AuthCardProps = {
   eyebrow: string;
@@ -35,12 +34,6 @@ export function AuthCard({
         </div>
 
         {children}
-
-        <EmptyState
-          title="Autenticación en preparación"
-          description="La conexión con Supabase Auth se habilitará en la siguiente fase del proyecto. El formulario es solo referencia visual."
-          className="mt-10"
-        />
 
         <p className="mt-8 text-center text-sm text-piedra">{footer}</p>
       </div>
