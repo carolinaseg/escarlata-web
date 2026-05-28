@@ -38,6 +38,15 @@ Diagnóstico de conexión (no expone keys): `GET /api/health/supabase`
 
 En Supabase Dashboard, configurá **Site URL** y **Redirect URLs** con tu dominio (y `http://localhost:3000` en desarrollo).
 
+### Catálogo (tabla `products`)
+
+Ejecutá la migración en el SQL Editor de Supabase: `supabase/migrations/001_products.sql`
+
+Crea la tabla, políticas RLS (lectura pública de productos activos) y datos de ejemplo. Luego:
+
+- `/catalogo` — listado desde Supabase
+- `/producto/[slug]` — detalle por slug o UUID
+
 ## Stack
 
 | Capa | Tecnología |

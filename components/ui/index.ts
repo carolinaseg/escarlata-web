@@ -5,6 +5,6 @@ export { Eyebrow } from "./Eyebrow";
 export { Heading } from "./Heading";
 export { Input } from "./Input";
 export { PageHeader } from "./PageHeader";
-export { ProductCard } from "./ProductCard";
+export { ProductCard } from "@/components/products/ProductCard";
 export { Section } from "./Section";
 export { Text } from "./Text";

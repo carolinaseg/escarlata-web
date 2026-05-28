@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
-import { ProductCard } from "@/components/ui/ProductCard";
+import { Suspense } from "react";
+import { CatalogContent } from "@/components/products/CatalogContent";
+import { ProductSkeleton } from "@/components/products/ProductSkeleton";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { Container } from "@/components/ui/Container";
-import { getAllProducts } from "@/lib/services/products";
 
 export const metadata: Metadata = {
   title: "Catálogo",
-  description: "Velas y jabones artesanales Escarlata. Ediciones limitadas y materiales nobles.",
+  description:
+    "Velas y jabones artesanales Escarlata. Ediciones limitadas y materiales nobles.",
 };
 
-export default async function CatalogoPage() {
-  const products = await getAllProducts();
+export const revalidate = 60;
 
+export default function CatalogoPage() {
   return (
     <>
       <PageHeader
@@ -20,21 +21,15 @@ export default async function CatalogoPage() {
         description="Piezas elaboradas a mano en lotes pequeños. Cada creación está pensada para transformar lo cotidiano en ritual."
       />
 
-      <Container className="py-14 md:py-20">
-        {products.length > 0 ? (
-          <ul className="grid gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
-            {products.map((product) => (
-              <li key={product.id}>
-                <ProductCard product={product} linked />
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-center text-sm text-piedra">
-            El catálogo estará disponible muy pronto.
-          </p>
-        )}
-      </Container>
+      <Suspense
+        fallback={
+          <div className="mx-auto max-w-6xl px-5 py-14 sm:px-6 md:px-10 md:py-20">
+            <ProductSkeleton count={6} />
+          </div>
+        }
+      >
+        <CatalogContent />
+      </Suspense>
     </>
   );
 }

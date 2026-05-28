@@ -17,6 +17,7 @@ export const routes = {
 
 export type AppRoute = (typeof routes)[keyof typeof routes];
 
-export function productRoute(id: string): `/producto/${string}` {
-  return `/producto/${id}`;
+/** Ruta de ficha de producto (slug o id). */
+export function productRoute(slugOrId: string): `/producto/${string}` {
+  return `/producto/${slugOrId}`;
 }
