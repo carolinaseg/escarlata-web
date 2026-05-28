@@ -12,6 +12,23 @@ npm run dev
 
 Abrir [http://localhost:3000](http://localhost:3000).
 
+### Supabase
+
+Variables en `.env.local` (ver `.env.example`):
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=tu-anon-key
+```
+
+| Contexto | Import |
+|----------|--------|
+| Client Components | `createClient` desde `@/lib/supabase/client` |
+| Server | `createClient` desde `@/lib/supabase/server` |
+| Variables / estado | `@/lib/supabase/env` |
+
+Diagnóstico de conexión (no expone keys): `GET /api/health/supabase`
+
 ## Stack
 
 | Capa | Tecnología |
