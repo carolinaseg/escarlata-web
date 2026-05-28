@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+/* —— Paleta oficial Escarlata —— */
+@theme {
+  --color-crema: #f5efe6;
+  --color-rosa: #d8b4a0;
+  --color-negro: #1f1f1f;
+  --color-beige: #e8dccf;
+  --color-piedra: #b7b0a8;
+
+  --font-serif: var(--font-cormorant);
+  --font-sans: var(--font-dm-sans);
+
+  --shadow-soft: 0 4px 24px -4px rgb(31 31 31 / 0.06);
+  --shadow-card: 0 8px 32px -8px rgb(31 31 31 / 0.08);
+
+  --animate-marquee: marquee 45s linear infinite;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-crema font-sans text-negro antialiased;
+  }
+
+  ::selection {
+    @apply bg-rosa/35 text-negro;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
