@@ -29,6 +29,15 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=tu-anon-key
 
 Diagnóstico de conexión (no expone keys): `GET /api/health/supabase`
 
+### Autenticación
+
+- Registro e inicio de sesión con email y contraseña (`signUp`, `signInWithPassword`)
+- Cierre de sesión (`signOut`) y sesión persistente vía cookies + middleware
+- Rutas protegidas: `/cuenta` · invitado: `/login`, `/registro`
+- Server Actions en `lib/actions/auth.ts` · usuario en servidor: `getUser()` desde `lib/services/auth.ts`
+
+En Supabase Dashboard, configurá **Site URL** y **Redirect URLs** con tu dominio (y `http://localhost:3000` en desarrollo).
+
 ## Stack
 
 | Capa | Tecnología |
@@ -47,8 +56,9 @@ Diagnóstico de conexión (no expone keys): `GET /api/health/supabase`
 | `/producto/[id]` | Ficha de producto |
 | `/nosotros` | El taller |
 | `/contacto` | Contacto |
-| `/login` | Iniciar sesión |
+| `/login` | Iniciar sesión (Supabase Auth) |
 | `/registro` | Crear cuenta |
+| `/cuenta` | Perfil (requiere sesión) |
 
 ## Estructura
 

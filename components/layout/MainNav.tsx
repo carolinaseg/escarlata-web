@@ -3,7 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { authNavigation, mainNavigation } from "@/lib/config/navigation";
+import type { User } from "@supabase/supabase-js";
+import { LogoutButton } from "@/components/auth/LogoutButton";
+import { mainNavigation } from "@/lib/config/navigation";
+import { routes } from "@/lib/constants/routes";
 import { cn } from "@/lib/utils/cn";
 import { motion } from "@/lib/design/tokens";
 
@@ -35,7 +38,11 @@ export function DesktopNav() {
   );
 }
 
-export function MobileNav() {
+type MobileNavProps = {
+  user: User | null;
+};
+
+export function MobileNav({ user }: MobileNavProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -110,16 +117,48 @@ export function MobileNav() {
               </li>
             );
           })}
+
           <li className="border-t border-negro/8 pt-5">
-            <ul className="flex flex-col gap-4">
-              {authNavigation.map((item) => (
-                <li key={item.href}>
-                  <Link href={item.href} onClick={close} className={linkClass(pathname === item.href)}>
-                    {item.label}
+            {user ? (
+              <ul className="flex flex-col gap-4">
+                <li>
+                  <Link
+                    href={routes.account}
+                    onClick={close}
+                    className={linkClass(pathname === routes.account)}
+                  >
+                    Mi cuenta
                   </Link>
                 </li>
-              ))}
-            </ul>
+                <li>
+                  <LogoutButton
+                    variant="ghost"
+                    className="!justify-start !px-0 !tracking-[0.28em]"
+                  />
+                </li>
+              </ul>
+            ) : (
+              <ul className="flex flex-col gap-4">
+                <li>
+                  <Link
+                    href={routes.login}
+                    onClick={close}
+                    className={linkClass(pathname === routes.login)}
+                  >
+                    Iniciar sesión
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={routes.register}
+                    onClick={close}
+                    className={linkClass(pathname === routes.register)}
+                  >
+                    Crear cuenta
+                  </Link>
+                </li>
+              </ul>
+            )}
           </li>
         </ul>
       </nav>
