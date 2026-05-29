@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Product } from "@/types/commerce";
 import { ProductImage } from "@/components/products/ProductImage";
-import { CATEGORY_LABELS } from "@/lib/products/constants";
+import { getProductLabel } from "@/lib/products/labels";
 import { productRoute } from "@/lib/constants/routes";
 import { formatPrice } from "@/lib/utils/format";
 import { cn } from "@/lib/utils/cn";
@@ -31,7 +31,7 @@ export function ProductCard({
 
       <div className="mt-auto space-y-2">
         <p className="text-[10px] uppercase tracking-[0.3em] text-piedra">
-          {CATEGORY_LABELS[product.category]}
+          {getProductLabel(product)}
         </p>
         <h3 className="font-serif text-2xl font-light text-negro">{product.name}</h3>
         <Text variant="small" tone="muted" className="line-clamp-2">

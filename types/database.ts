@@ -6,8 +6,32 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[];
 
-export type ProductCategoryDb = "velas" | "jabones" | "sets";
 export type ProductCurrencyDb = "ARS" | "USD";
+
+export type CategoryRow = {
+  id: string;
+  slug: string;
+  name: string;
+  description: string | null;
+  image_url: string | null;
+  sort_order: number;
+  active: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type CollectionRow = {
+  id: string;
+  category_id: string;
+  slug: string;
+  name: string;
+  description: string | null;
+  image_url: string | null;
+  sort_order: number;
+  active: boolean;
+  created_at: string;
+  updated_at: string;
+};
 
 export type ProductRow = {
   id: string;
@@ -16,7 +40,8 @@ export type ProductRow = {
   description: string;
   price: number;
   currency: ProductCurrencyDb;
-  category: ProductCategoryDb;
+  category_id: string;
+  collection_id: string | null;
   image_url: string | null;
   featured: boolean;
   stock: number | null;
@@ -25,19 +50,42 @@ export type ProductRow = {
   updated_at: string;
 };
 
-export type ProductInsert = Omit<ProductRow, "id" | "created_at" | "updated_at"> & {
-  id?: string;
-  created_at?: string;
-  updated_at?: string;
+export type ProductRowWithRelations = ProductRow & {
+  category: CategoryRow | null;
+  collection: CollectionRow | null;
 };
 
 export type Database = {
   public: {
     Tables: {
+      categories: {
+        Row: CategoryRow;
+        Insert: Omit<CategoryRow, "id" | "created_at" | "updated_at"> & {
+          id?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<CategoryRow>;
+        Relationships: [];
+      };
+      collections: {
+        Row: CollectionRow;
+        Insert: Omit<CollectionRow, "id" | "created_at" | "updated_at"> & {
+          id?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<CollectionRow>;
+        Relationships: [];
+      };
       products: {
         Row: ProductRow;
-        Insert: ProductInsert;
-        Update: Partial<ProductInsert>;
+        Insert: Omit<ProductRow, "id" | "created_at" | "updated_at"> & {
+          id?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: Partial<ProductRow>;
         Relationships: [];
       };
     };

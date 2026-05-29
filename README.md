@@ -38,14 +38,23 @@ Diagnóstico de conexión (no expone keys): `GET /api/health/supabase`
 
 En Supabase Dashboard, configurá **Site URL** y **Redirect URLs** con tu dominio (y `http://localhost:3000` en desarrollo).
 
-### Catálogo (tabla `products`)
+### Catálogo
 
-Ejecutá la migración en el SQL Editor de Supabase: `supabase/migrations/001_products.sql`
+Migraciones en el SQL Editor de Supabase (en orden):
 
-Crea la tabla, políticas RLS (lectura pública de productos activos) y datos de ejemplo. Luego:
+1. `supabase/migrations/001_products.sql`
+2. `supabase/migrations/002_categories_collections.sql`
 
-- `/catalogo` — listado desde Supabase
-- `/producto/[slug]` — detalle por slug o UUID
+Jerarquía: **Categoría → Colección (opcional) → Producto**
+
+| Ruta | Descripción |
+|------|-------------|
+| `/catalogo` | Índice de categorías |
+| `/catalogo/[categoria]` | Categoría + colecciones + productos |
+| `/catalogo/[categoria]/[coleccion]` | Colección específica |
+| `/producto/[slug]` | Detalle de producto |
+
+Capa de datos: `lib/catalog/repository.ts` · UI: `components/catalog/`
 
 ## Stack
 
