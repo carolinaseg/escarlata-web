@@ -2,46 +2,95 @@
 
 /* —— Paleta oficial Escarlata —— */
 @theme {
-  --color-crema: #f5efe6;
-  --color-rosa: #d8b4a0;
-  --color-negro: #1f1f1f;
-  --color-beige: #e8dccf;
-  --color-piedra: #b7b0a8;
+/* Fondo  magenta oscuro */
+--color-crema: #1b1218;
 
-  --font-serif: var(--font-cormorant);
-  --font-sans: var(--font-dm-sans);
+/* Accent principal rosa gold */
+--color-rosa: #b8897f;
 
-  --shadow-soft: 0 4px 24px -4px rgb(31 31 31 / 0.06);
-  --shadow-card: 0 8px 32px -8px rgb(31 31 31 / 0.08);
+/* Texto principal */
+--color-negro: #e6c7c2;
 
-  --animate-marquee: marquee 45s linear infinite;
+/* Secundarios */
+--color-beige: #2b1d24;
+
+/* Hover / interacción */
+--color-piedra: #c99893;
+
+--color-malva: #6f5560;
+
+--color-secundario: #23181f;
+--color-terciaria: #2b1d24;
+
+--color-rose-gold: #b8897f;
+--color-rose-deep: #9b6e66;
+--color-champagne: #d7b1a7;
+--color-copper: #7a5a5f;
+
+--color-text: #f0d8d2;
+
+
+--font-girasol: var(--font-girasol);
+--font-serif: var(--font-cormorant);
+--font-sans: var(--font-dm-sans);
+
+--shadow-soft: 0 4px 20px -6px rgb(0 0 0 / 0.22);
+--shadow-card:
+0 12px 32px -12px rgb(0 0 0 / 0.35),
+0 0 1px rgb(230 199 194 / 0.08);
+
+--animate-marquee: marquee 45s linear infinite;
 }
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
+html {
+scroll-behavior: smooth;
+}
 
-  body {
-    @apply bg-crema font-sans text-negro antialiased;
-  }
+body {
+@apply bg-crema font-sans text-negro antialiased;
+}
 
-  ::selection {
-    @apply bg-rosa/35 text-negro;
-  }
+::selection {
+  background-color: rgb(183 132 127 / 0.42);
+  color: #f5efe6;
+}
+
+a,
+button {
+transition:
+background-color 300ms ease,
+color 300ms ease,
+border-color 300ms ease,
+opacity 300ms ease,
+transform 300ms ease;
+}
 }
 
 @keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+from {
+transform: translateX(0);
+}
+
+to {
+transform: translateX(-50%);
+}
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.text-balance {
+text-wrap: balance;
+}
+
+.hover-premium {
+  @apply hover:text-piedra;
+}
+
+.hover-surface {
+  @apply hover:bg-piedra/40 transition-all duration-300;
+}
+
+.border-soft {
+  border-color: rgb(230 199 194 / 0.12);
+}
 }

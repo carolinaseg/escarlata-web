@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans, GFS_Didot } from "next/font/google";
 import { siteConfig } from "@/lib/config/site";
 import "./globals.css";
+
+const girasol = GFS_Didot({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-girasol",
+});
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -32,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${cormorant.variable} ${dmSans.variable}`}>
+    <html lang="es" className={`${cormorant.variable} ${dmSans.variable} ${girasol.variable}`}>
       <body>{children}</body>
     </html>
   );

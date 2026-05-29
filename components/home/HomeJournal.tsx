@@ -22,7 +22,7 @@ const entries = [
 
 export function HomeJournal() {
   return (
-    <Section id="diario" variant="warm" ariaLabelledby="diario-titulo">
+    <Section className="bg-terciaria text-crema" id="diario" variant="warm" ariaLabelledby="diario-titulo">
       <Container>
         <Eyebrow className="mb-3">Diario</Eyebrow>
         <Heading id="diario-titulo" className="mb-10 md:mb-12">

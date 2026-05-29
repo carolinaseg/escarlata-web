@@ -8,7 +8,7 @@ import { routes } from "@/lib/constants/routes";
 
 export function HomeCraft() {
   return (
-    <Section variant="dark" ariaLabelledby="taller-titulo">
+    <Section className="bg-secundario text-crema" variant="dark" ariaLabelledby="taller-titulo">
       <Container className="grid gap-10 md:grid-cols-2 md:items-center md:gap-16">
         <div>
           <Eyebrow tone="light" className="mb-3">
@@ -20,12 +20,21 @@ export function HomeCraft() {
           </Heading>
         </div>
 
-        <div className="space-y-6">
-          <Text tone="light">
+        <div className="space- y-6">
+          <Text tone="light" className="text-negro">
             Vertimos cera a temperatura precisa, curamos jabones durante semanas y
             elegimos envases que honran la materia prima sin competir con ella.
           </Text>
-          <ButtonLink href={routes.about} variant="secondary">
+          <ButtonLink 
+          className="
+              bg-rose-deep
+              text-negro
+              hover:bg-negro/80
+              hover:bg-negro/80
+              transition-all
+              duration-300" 
+            href={routes.about} 
+            variant="secondary">
             Conocer el taller
           </ButtonLink>
         </div>
