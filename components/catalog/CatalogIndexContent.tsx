@@ -1,10 +1,10 @@
-import { Container } from "@/components/ui/Container";
-import { ProductGrid } from "@/components/products/ProductGrid";
+import { CategoryGrid } from "@/components/catalog/CategoryGrid";
 import { ProductEmpty, ProductError } from "@/components/products/ProductFeedback";
-import { getAllProducts } from "@/lib/services/products";
+import { Container } from "@/components/ui/Container";
+import { getCategories } from "@/lib/services/catalog";
 
-export async function CatalogContent() {
-  const result = await getAllProducts();
+export async function CatalogIndexContent() {
+  const result = await getCategories();
 
   if (!result.ok) {
     return (
@@ -24,7 +24,7 @@ export async function CatalogContent() {
 
   return (
     <Container className="py-14 md:py-20">
-      <ProductGrid products={result.data} />
+      <CategoryGrid categories={result.data} />
     </Container>
   );
 }

@@ -7,10 +7,16 @@ import { Container } from "@/components/ui/Container";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Heading } from "@/components/ui/Heading";
 import { Text } from "@/components/ui/Text";
-import { CATEGORY_DETAIL_LABELS } from "@/lib/products/constants";
-import { routes } from "@/lib/constants/routes";
+import {
+  categoryRoute,
+  collectionRoute,
+  routes,
+} from "@/lib/constants/routes";
+import { getProductDetailLabel } from "@/lib/products/labels";
 import { getProductBySlugOrId } from "@/lib/services/products";
 import { formatPrice } from "@/lib/utils/format";
+import { cn } from "@/lib/utils/cn";
+import { motion } from "@/lib/design/tokens";
 
 type ProductDetailContentProps = {
   slugOrId: string;
@@ -37,12 +43,40 @@ export async function ProductDetailContent({ slugOrId }: ProductDetailContentPro
   return (
     <>
       <Container className="py-10 md:py-14">
-        <Link
-          href={routes.catalog}
-          className="text-[10px] font-medium uppercase tracking-[0.28em] text-piedra transition-colors hover:text-negro"
-        >
-          ← Volver al catálogo
-        </Link>
+        <nav className="flex flex-wrap items-center gap-2 text-[10px] font-medium uppercase tracking-[0.28em]">
+          <Link
+            href={routes.catalog}
+            className={cn("text-piedra", motion.transition, "hover:text-negro")}
+          >
+            Catálogo
+          </Link>
+          {product.category && (
+            <>
+              <span className="text-piedra/50" aria-hidden>
+                /
+              </span>
+              <Link
+                href={categoryRoute(product.category.slug)}
+                className={cn("text-piedra", motion.transition, "hover:text-negro")}
+              >
+                {product.category.name}
+              </Link>
+            </>
+          )}
+          {product.collection && product.category && (
+            <>
+              <span className="text-piedra/50" aria-hidden>
+                /
+              </span>
+              <Link
+                href={collectionRoute(product.category.slug, product.collection.slug)}
+                className={cn("text-piedra", motion.transition, "hover:text-negro")}
+              >
+                {product.collection.name}
+              </Link>
+            </>
+          )}
+        </nav>
       </Container>
 
       <Container className="pb-16 md:pb-24">
@@ -56,7 +90,7 @@ export async function ProductDetailContent({ slugOrId }: ProductDetailContentPro
 
           <div className="flex flex-col justify-center">
             <Eyebrow tone="accent" className="mb-4">
-              {CATEGORY_DETAIL_LABELS[product.category]}
+              {getProductDetailLabel(product)}
             </Eyebrow>
             <Heading as={1}>{product.name}</Heading>
             <Text tone="muted" className="mt-5">
@@ -78,9 +112,15 @@ export async function ProductDetailContent({ slugOrId }: ProductDetailContentPro
               <ButtonLink href={routes.contact}>
                 Consultar disponibilidad
               </ButtonLink>
-              <ButtonLink href={routes.catalog} variant="ghost" size="sm">
-                Ver más piezas
-              </ButtonLink>
+              {product.category && (
+                <ButtonLink
+                  href={categoryRoute(product.category.slug)}
+                  variant="ghost"
+                  size="sm"
+                >
+                  Ver categoría
+                </ButtonLink>
+              )}
             </div>
           </div>
         </div>

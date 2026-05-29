@@ -1,4 +1,4 @@
-export type ProductCategory = "velas" | "jabones" | "sets";
+import type { CategorySummary, CollectionSummary } from "@/types/catalog";
 
 export type Product = {
   id: string;
@@ -7,7 +7,10 @@ export type Product = {
   description: string;
   price: number;
   currency: "ARS" | "USD";
-  category: ProductCategory;
+  categoryId: string;
+  category?: CategorySummary;
+  collectionId?: string;
+  collection?: CollectionSummary;
   imageUrl?: string;
   featured?: boolean;
   stock?: number;

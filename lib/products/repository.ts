@@ -1,8 +1,9 @@
-import { PRODUCT_SELECT } from "@/lib/products/constants";
+import { PRODUCT_WITH_RELATIONS_SELECT } from "@/lib/catalog/constants";
 import { mapProductRow, mapProductRows } from "@/lib/products/mapper";
 import type { ProductResult, ProductsResult } from "@/lib/products/types";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
+import type { ProductRowWithRelations } from "@/types/database";
 
 const LOAD_ERROR = "No pudimos cargar los productos. Intentá de nuevo en unos instantes.";
 const NOT_FOUND_ERROR = "No encontramos este producto.";
@@ -21,7 +22,7 @@ export async function fetchAllProducts(): Promise<ProductsResult> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("products")
-    .select(PRODUCT_SELECT)
+    .select(PRODUCT_WITH_RELATIONS_SELECT)
     .eq("active", true)
     .order("featured", { ascending: false })
     .order("created_at", { ascending: false });
@@ -31,7 +32,7 @@ export async function fetchAllProducts(): Promise<ProductsResult> {
     return { ok: false, error: LOAD_ERROR };
   }
 
-  return { ok: true, data: mapProductRows(data ?? []) };
+  return { ok: true, data: mapProductRows((data ?? []) as ProductRowWithRelations[]) };
 }
 
 export async function fetchFeaturedProducts(): Promise<ProductsResult> {
@@ -42,7 +43,7 @@ export async function fetchFeaturedProducts(): Promise<ProductsResult> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("products")
-    .select(PRODUCT_SELECT)
+    .select(PRODUCT_WITH_RELATIONS_SELECT)
     .eq("active", true)
     .eq("featured", true)
     .order("created_at", { ascending: false })
@@ -53,7 +54,7 @@ export async function fetchFeaturedProducts(): Promise<ProductsResult> {
     return { ok: false, error: LOAD_ERROR };
   }
 
-  return { ok: true, data: mapProductRows(data ?? []) };
+  return { ok: true, data: mapProductRows((data ?? []) as ProductRowWithRelations[]) };
 }
 
 export async function fetchProductBySlugOrId(
@@ -68,7 +69,7 @@ export async function fetchProductBySlugOrId(
 
   const { data, error } = await supabase
     .from("products")
-    .select(PRODUCT_SELECT)
+    .select(PRODUCT_WITH_RELATIONS_SELECT)
     .eq(column, slugOrId)
     .eq("active", true)
     .maybeSingle();
@@ -82,7 +83,7 @@ export async function fetchProductBySlugOrId(
     return { ok: false, error: NOT_FOUND_ERROR };
   }
 
-  return { ok: true, data: mapProductRow(data) };
+  return { ok: true, data: mapProductRow(data as ProductRowWithRelations) };
 }
 
 export async function fetchProductSlugs(): Promise<string[]> {
